@@ -1,0 +1,42 @@
+[gd_scene load_steps=5 format=3 uid="uid://cj7b5rtw0pglv"]
+
+[ext_resource type="Texture2D" uid="uid://dokfif1b3iu1y" path="res://Imports/PlanetGFXTemplate.png" id="1_beh8v"]
+[ext_resource type="Script" path="res://Scripts/PlanetUIElement.cs" id="1_sanud"]
+[ext_resource type="Material" uid="uid://bwo5uepmclevh" path="res://Materials/Planet.tres" id="2_85nyr"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_8x184"]
+line_spacing = 0.0
+outline_size = 6
+outline_color = Color(0, 0, 0, 1)
+
+[node name="Planet" type="VBoxContainer" node_paths=PackedStringArray("nameUI", "planetGfx", "distanceUI")]
+custom_minimum_size = Vector2(256, 256)
+script = ExtResource("1_sanud")
+nameUI = NodePath("Planet_Name")
+planetGfx = NodePath("GFX")
+distanceUI = NodePath("Planet_Dist")
+
+[node name="Planet_Name" type="Label" parent="."]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+text = "Name"
+label_settings = SubResource("LabelSettings_8x184")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="GFX" type="TextureRect" parent="."]
+texture_filter = 1
+material = ExtResource("2_85nyr")
+layout_mode = 2
+size_flags_vertical = 3
+texture = ExtResource("1_beh8v")
+stretch_mode = 5
+
+[node name="Planet_Dist" type="Label" parent="."]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+text = "10 Light Mins"
+label_settings = SubResource("LabelSettings_8x184")
+horizontal_alignment = 1
+vertical_alignment = 1

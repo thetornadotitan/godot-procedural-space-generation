@@ -1,0 +1,298 @@
+[gd_scene load_steps=11 format=3 uid="uid://dtfrsea3n67oq"]
+
+[ext_resource type="Script" path="res://Scripts/SpaceSceneManager.cs" id="1_7mqbe"]
+[ext_resource type="PackedScene" uid="uid://d0n24xphwlfec" path="res://Prefabs/SpaceChunk.tscn" id="2_ydmm4"]
+[ext_resource type="Script" path="res://Scripts/StarUI.cs" id="3_adpv7"]
+[ext_resource type="PackedScene" uid="uid://cj7b5rtw0pglv" path="res://Prefabs/planetUIElement.tscn" id="4_tefcr"]
+[ext_resource type="Script" path="res://Scripts/HelpUI.cs" id="5_3yb8p"]
+
+[sub_resource type="Gradient" id="Gradient_ne4eu"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_sk1p5"]
+gradient = SubResource("Gradient_ne4eu")
+width = 4
+height = 4
+
+[sub_resource type="LabelSettings" id="LabelSettings_6x5jq"]
+line_spacing = 0.0
+font_size = 26
+outline_size = 6
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_m2v2b"]
+font_size = 24
+outline_size = 6
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_hgje8"]
+font_size = 32
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
+
+[node name="SpaceSceneManager" type="Node2D" node_paths=PackedStringArray("chunkMapNode", "starInfoUI", "helpInfoUI")]
+script = ExtResource("1_7mqbe")
+spaceChunkScene = ExtResource("2_ydmm4")
+chunkMapNode = NodePath("ChunkMap")
+starInfoUI = NodePath("StarUI")
+helpInfoUI = NodePath("HelpUI")
+
+[node name="ChunkMap" type="Node2D" parent="."]
+
+[node name="Crosshair" type="Sprite2D" parent="."]
+position = Vector2(958, 538)
+texture = SubResource("GradientTexture2D_sk1p5")
+
+[node name="StarUI" type="Control" parent="." node_paths=PackedStringArray("closeButton", "starName", "planetContainer")]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_left = 430.0
+offset_top = 10.0
+offset_right = 1490.0
+offset_bottom = 1070.0
+script = ExtResource("3_adpv7")
+closeButton = NodePath("VBoxContainer/Controls/CloseArea")
+starName = NodePath("VBoxContainer/StarName/StarName_Label")
+planetUIElement = ExtResource("4_tefcr")
+planetContainer = NodePath("VBoxContainer/Content_Planets/Planet_Container")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="StarUI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+
+[node name="Controls" type="ColorRect" parent="StarUI/VBoxContainer"]
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+color = Color(0.196078, 0.196078, 0.196078, 1)
+
+[node name="CloseArea" type="ColorRect" parent="StarUI/VBoxContainer/Controls"]
+custom_minimum_size = Vector2(36, 0)
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 0
+grow_vertical = 2
+color = Color(0.678431, 0, 0, 1)
+
+[node name="Label" type="Label" parent="StarUI/VBoxContainer/Controls/CloseArea"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "X"
+label_settings = SubResource("LabelSettings_6x5jq")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label" type="Label" parent="StarUI/VBoxContainer/Controls"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Star System Info"
+label_settings = SubResource("LabelSettings_m2v2b")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="StarName" type="ColorRect" parent="StarUI/VBoxContainer"]
+custom_minimum_size = Vector2(0, 96)
+layout_mode = 2
+color = Color(0, 0, 0.109804, 1)
+
+[node name="StarName_Label" type="Label" parent="StarUI/VBoxContainer/StarName"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "[Star Name]
+"
+label_settings = SubResource("LabelSettings_hgje8")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Header_Planets" type="ColorRect" parent="StarUI/VBoxContainer"]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+color = Color(0.106999, 0.194711, 0.335459, 1)
+
+[node name="Label" type="Label" parent="StarUI/VBoxContainer/Header_Planets"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Planets' name and light distance from star.
+"
+label_settings = SubResource("LabelSettings_6x5jq")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Content_Planets" type="ColorRect" parent="StarUI/VBoxContainer"]
+custom_minimum_size = Vector2(0, 96)
+layout_mode = 2
+size_flags_vertical = 3
+color = Color(0, 0, 0.109804, 1)
+
+[node name="Planet_Container" type="GridContainer" parent="StarUI/VBoxContainer/Content_Planets"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -394.0
+offset_right = 394.0
+offset_bottom = 260.0
+grow_horizontal = 2
+columns = 4
+
+[node name="HelpUI" type="Control" parent="." node_paths=PackedStringArray("closeButton")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 430.0
+offset_top = 10.0
+offset_right = 1490.0
+offset_bottom = 1070.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("5_3yb8p")
+closeButton = NodePath("VBoxContainer/Controls/CloseArea")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HelpUI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+
+[node name="Controls" type="ColorRect" parent="HelpUI/VBoxContainer"]
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+color = Color(0.196078, 0.196078, 0.196078, 1)
+
+[node name="CloseArea" type="ColorRect" parent="HelpUI/VBoxContainer/Controls"]
+custom_minimum_size = Vector2(36, 0)
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 0
+grow_vertical = 2
+color = Color(0.678431, 0, 0, 1)
+
+[node name="Label" type="Label" parent="HelpUI/VBoxContainer/Controls/CloseArea"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "X"
+label_settings = SubResource("LabelSettings_6x5jq")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label" type="Label" parent="HelpUI/VBoxContainer/Controls"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Help Info"
+label_settings = SubResource("LabelSettings_m2v2b")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ColorRect" type="ColorRect" parent="HelpUI/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+color = Color(0, 0, 0.109804, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="HelpUI/VBoxContainer/ColorRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="RichTextLabel" type="RichTextLabel" parent="HelpUI/VBoxContainer/ColorRect/MarginContainer"]
+layout_mode = 2
+focus_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/bold_italics_font_size = 24
+theme_override_font_sizes/italics_font_size = 24
+theme_override_font_sizes/mono_font_size = 24
+theme_override_font_sizes/normal_font_size = 24
+theme_override_font_sizes/bold_font_size = 24
+bbcode_enabled = true
+text = "[b]Welcome to PCE: Procedural Space Exploration[/b]
+
+PCE is a Godot-based app designed to explore the potential of procedural generation. Inspired by TheOneLoneCoder's insightful Procedural Generation video 
+https://www.youtube.com/watch?v=ZZY9YE7rZJw&t=2140s. 
+
+This project delves into the dynamic creation of a vast and seemingly infinite 2D universe.
+
+[b]Navigating Space:[/b]
+
+	[b]Investigate Stars: [/b]
+		Single left-click on a star to view details about its orbiting planets.
+
+	[b]Explore the Cosmos: [/b]
+		Left-click and hold while dragging the mouse to pan through space and discover 
+		other stars.
+
+	[b]Close Windows: [/b]
+		Click the red \"X\" in the upper-right corner to close this help window or the star 
+		information screen.
+
+	[b]Reopen Help: [/b]
+		Press the H key at any time to bring up this help window again.
+
+[b]Key Features:[/b]
+
+	[b]Dynamic Planet Textures:[/b] 
+		Using 2D noise textures, planets are dynamically created with unique, procedurally 
+		generated surfaces.
+
+	[b]On-Demand Generation: [/b] 
+		Stars and planets are generated as you explore a massive 2D grid. The generation 
+		process is seeded based on their position in the grid, ensuring persistence without 
+		requiring constant memory usage.
+
+	[b]Infinite Exploration: [/b] 
+		Each run initializes a pseudo-random number generator to seed a unique universe. 
+		While every new run creates a fresh cosmos, objects within the same session remain 
+		consistent when revisited.
+
+	[b]Enhanced Visual Fidelity: [/b] 
+		The app employs shader techniques to enhance visual quality, adding a layer of 
+		complexity and polish to the procedurally generated visuals."
+context_menu_enabled = true
+selection_enabled = true
+drag_and_drop_selection_enabled = false

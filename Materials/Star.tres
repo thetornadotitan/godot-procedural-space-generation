@@ -1,0 +1,10 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://cgto3v0ukwqf3"]
+
+[ext_resource type="Shader" path="res://Shaders/Star.gdshader" id="1_2lde0"]
+[ext_resource type="Texture2D" uid="uid://dokfif1b3iu1y" path="res://Imports/PlanetGFXTemplate.png" id="2_wbdfx"]
+
+[resource]
+resource_local_to_scene = true
+shader = ExtResource("1_2lde0")
+shader_parameter/rotationDirection = Vector2(1, 0)
+shader_parameter/shapeTex = ExtResource("2_wbdfx")

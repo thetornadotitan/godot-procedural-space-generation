@@ -1,0 +1,78 @@
+[gd_scene load_steps=10 format=3 uid="uid://d0n24xphwlfec"]
+
+[ext_resource type="Script" path="res://Scripts/SpaceChunk.cs" id="1_dwfds"]
+[ext_resource type="Script" path="res://Scripts/Star.cs" id="2_eetds"]
+[ext_resource type="Material" uid="uid://cgto3v0ukwqf3" path="res://Materials/Star.tres" id="3_jf51r"]
+
+[sub_resource type="Gradient" id="Gradient_afnq7"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_3bwet"]
+gradient = SubResource("Gradient_afnq7")
+width = 256
+height = 256
+fill = 2
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="Gradient" id="Gradient_45fxk"]
+offsets = PackedFloat32Array(0, 0.886364, 1)
+colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_8oaii"]
+gradient = SubResource("Gradient_45fxk")
+width = 256
+height = 256
+fill = 2
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_2fdao"]
+load_path = "res://.godot/imported/PlanetGFXTemplate.png-af739824c8a2ceb6bdd363dfce82c12f.ctex"
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7pe3a"]
+radius = 16.0
+
+[node name="SpaceChunk" type="Node2D" node_paths=PackedStringArray("coordsLabel", "myStar")]
+script = ExtResource("1_dwfds")
+coordsLabel = NodePath("Control/Coords")
+myStar = NodePath("Star")
+
+[node name="BG" type="Sprite2D" parent="."]
+texture = SubResource("GradientTexture2D_3bwet")
+
+[node name="Selector" type="Sprite2D" parent="."]
+texture = SubResource("GradientTexture2D_8oaii")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -117.0
+offset_top = -117.0
+offset_right = 117.0
+offset_bottom = 118.0
+mouse_filter = 1
+
+[node name="Coords" type="Label" parent="Control"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -23.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "0,0"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Star" type="Area2D" parent="." node_paths=PackedStringArray("gfx")]
+script = ExtResource("2_eetds")
+gfx = NodePath("GFX")
+
+[node name="GFX" type="Sprite2D" parent="Star"]
+texture_filter = 1
+material = ExtResource("3_jf51r")
+texture = SubResource("CompressedTexture2D_2fdao")
+
+[node name="Collision" type="CollisionShape2D" parent="Star"]
+shape = SubResource("CircleShape2D_7pe3a")
